@@ -161,15 +161,6 @@ class _Authentication extends State<Authentication> {
 
                           ],
                         )),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child :Text(message != null ? message : "",
-            style: TextStyle(color: Colors.red, fontSize: 16))),
-                    Text(DotEnv().env['BackEnd_Url'] ),
-                    Text(DotEnv().env['backendImage_url'] ),
-                    Text(DotEnv().env['aes_key'] ),
-                    Text(DotEnv().env['aes_iv'] ),
-                    Text(DotEnv().env['secretKey'] ),
                   ],
                 )),
           ],
