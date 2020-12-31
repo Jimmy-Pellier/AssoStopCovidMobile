@@ -1,0 +1,65 @@
+  name: CI
+
+  on: workflow_dispatch
+  #  push:
+  #    branches:
+  #      - master
+
+  jobs:
+    build_android:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - uses: actions/setup-java@v1
+          with:
+            java-version: 11.x
+        - uses: subosito/flutter-action@v1
+          with:
+            flutter-version: 1.22.2
+          env:
+            secretKey: ${{ secrets.SECRET_KEY }}
+            aes_key: ${{ secrets.AES_KEY }}
+            aes_iv: ${{ secrets.AES_IV }}
+            BackEnd_Url: ${{ secrets.BACKEND_URL }}
+            backendImage_url: ${{ secrets.BACKENDIMAGE_URL }}
+        - run: flutter pub get
+        #- run: flutter format -n --set-exit-if-changed --line-length 140 .
+        - run: cat > .env
+        - name: Dump GitHub context
+          env:
+            secretKey: ${{ secrets.SECRET_KEY }}
+          run: echo "secretKey=$secretKey" >> .env
+          
+        - name: Dump GitHub context
+          env:
+            aes_key: ${{ secrets.AES_KEY }}
+          run: echo "aes_key=$aes_key" >> .env           
+ 
+        - name: Dump GitHub context
+          env:
+            aes_key: ${{ secrets.AES_IV }}
+          run: echo "aes_iv=$aes_iv" >> .env   
+
+        - name: Dump GitHub context
+          env:
+            BackEnd_Url: ${{ secrets.BACKEND_URL }}
+          run: echo "BackEnd_Url = $BackEnd_Url" >> .env   
+
+        - name: Dump GitHub context
+          env:
+            backendImage_url: ${{ secrets.BACKENDIMAGE_URL }}
+          run: echo "backendImage_url = $backendImage_url" >> .env         
+            
+          
+        - run: flutter analyze .
+        # - run: flutter test
+        - run: flutter build appbundle --target-platform android-arm,android-arm64,android-x64
+        - run: flutter build apk
+        - uses: actions/upload-artifact@v1
+          with:
+            name: app-release
+            path: build/app/outputs/bundle/release/app-release.aab
+        - uses: actions/upload-artifact@v1
+          with:
+            name: release-apk
+            path: build/app/outputs/apk/release/app-release.apk
