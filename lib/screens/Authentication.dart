@@ -9,7 +9,6 @@ import 'package:assostopcovidmobile/services/userService.dart';
 import 'package:assostopcovidmobile/widgets/Dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Authentication extends StatefulWidget {
   Authentication({Key key}) : super(key: key);
