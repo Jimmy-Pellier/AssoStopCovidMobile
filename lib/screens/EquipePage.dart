@@ -58,7 +58,7 @@ class _EquipePage extends State<EquipePage> {
                         Container(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: Text(
-                              equipe != null ? equipe.categorieDesignation : '',
+                              equipe != null && equipe.categorieDesignation != null ? equipe.categorieDesignation : '',
                               softWrap: true,
                               style: TextStyle(fontSize: 14),
                             )),
@@ -96,7 +96,7 @@ class _EquipePage extends State<EquipePage> {
                         Container(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: Text(
-                              equipe != null ? equipe.entraineur : '',
+                              equipe != null && equipe.entraineur != null ? equipe.entraineur : '',
                               softWrap: true,
                               style: TextStyle(fontSize: 14),
                             )),
@@ -138,6 +138,7 @@ class _EquipePage extends State<EquipePage> {
             );
 
             return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,6 +169,7 @@ class _EquipePage extends State<EquipePage> {
                     Container(
                         padding: const EdgeInsets.all(10),
                         child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: data.data != null

@@ -25,7 +25,7 @@ class _Authentication extends State<Authentication> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   String _login, _password;
-  String message;
+  String message = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +120,7 @@ class _Authentication extends State<Authentication> {
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
+
                                   Dialogs.showLoadingDialog(context, _keyLoader);
 
                                   UserService service = new UserService();
@@ -144,6 +145,15 @@ class _Authentication extends State<Authentication> {
                                         }),
                                       );
                                     }
+                                    else {
+                                      setState(() {
+                                        message =
+                                        "Vous ne disposez pas les droits nécessaires";
+                                      });
+                                      Navigator.of(_keyLoader.currentContext,rootNavigator: true).pop();
+                                    }
+
+
                                   } else {
                                     setState(() {
                                       message = "le login / mot de passe est incorrect";
@@ -161,6 +171,19 @@ class _Authentication extends State<Authentication> {
 
                           ],
                         )),
+                    Container(
+                        child:
+                        Row(mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Text(
+                              message,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        ])),
                   ],
                 )),
           ],

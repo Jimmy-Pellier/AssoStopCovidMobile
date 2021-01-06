@@ -20,11 +20,11 @@ class Dao<T extends IModel, U extends IModel> {
 
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
       client.badCertificateCallback = (X509Certificate cert, String host, int port) {
-        if (host == "192.168.1.13" || host == "173.249.55.124") {
+       // if (host == "192.168.1.13" || host == "173.249.55.124") {
           // Verify the certificate
           return true;
-        }
-        return false;
+      //  }
+      //  return false;
       };
     };
     //-------------------------------------------------------------------------------------//
