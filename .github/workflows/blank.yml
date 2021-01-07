@@ -37,7 +37,7 @@
  
         - name: Dump GitHub context
           env:
-            aes_key: ${{ secrets.AES_IV }}
+            aes_iv: ${{ secrets.AES_IV }}
           run: echo "aes_iv=$aes_iv" >> .env   
 
         - name: Dump GitHub context
