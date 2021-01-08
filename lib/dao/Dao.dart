@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:assostopcovidmobile/models/User.dart';
 import 'package:assostopcovidmobile/models/UserAuth.dart';
 import 'package:assostopcovidmobile/services/Constant.dart';
 import 'package:dio/adapter.dart';

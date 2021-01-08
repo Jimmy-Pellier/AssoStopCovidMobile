@@ -152,30 +152,11 @@ class SearchPage extends StatelessWidget {
   }
 }
 
-Widget _createDrawerItem(
-    {IconData icon, String text, GestureTapCallback onTap}) {
-  return ListTile(
-    title: Row(
-      children: <Widget>[
-        Icon(icon),
-        Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: Text(text),
-        )
-      ],
-    ),
-    onTap: onTap,
-  );
-}
-
 class AppDrawer extends StatelessWidget {
 
-  Association association;
+   final Association association;
 
-  AppDrawer(Association asso)
-  {
-    association = asso;
-  }
+  AppDrawer( this.association);
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +168,7 @@ class AppDrawer extends StatelessWidget {
             height: 25,
           ),
           DrawerHeader(
-
+            child: null,
             decoration: BoxDecoration(
               color:  HexColor.fromHex(association.color),
                 image: DecorationImage(image: NetworkImage(DotEnv().env['backendImage_url'] + association.logo))),
@@ -196,9 +177,6 @@ class AppDrawer extends StatelessWidget {
             title: Text('Déconnexion'),
             trailing: Icon(Icons.logout),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                 return new Authentication();
               }));
