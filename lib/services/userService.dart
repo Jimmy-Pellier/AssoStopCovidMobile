@@ -52,9 +52,9 @@ class UserService {
     if (response.statusCode == HttpStatus.ok) {
       //Enregistrement des token JWT
 
-      storage.write(key: jwtToken_Key, value: resObject.token);
-      storage.write(key: jwtRefreshToken_Key, value: resObject.refreshToken);
-      storage.write(key: userId_Key, value: resObject.id.toString());
+      await storage.write(key: jwtToken_Key, value: resObject.token);
+      await storage.write(key: jwtRefreshToken_Key, value: resObject.refreshToken);
+      await storage.write(key: userId_Key, value: resObject.id.toString());
     }
 
     return response;

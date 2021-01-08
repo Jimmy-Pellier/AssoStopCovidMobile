@@ -53,6 +53,7 @@ class MainBodyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final navigatorKey = GlobalObjectKey<NavigatorState>(context);
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
     return WillPopScope(
       onWillPop: () async {
@@ -63,21 +64,25 @@ class MainBodyApp extends HookWidget {
 
         return true;
       },
+      //onPressed: () => _scaffoldKey.currentState.openDrawer(),
+
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: AppDrawer(association),
         appBar: AppBar(
           automaticallyImplyLeading: true,
           backgroundColor: HexColor.fromHex(association.color),
           leading: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+             /* Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                 return new Authentication();
-              }));
+              }));*/
 
-              // _scaffoldkey.currentState.openDrawer();
+              _scaffoldKey.currentState.openDrawer();
             },
             child: CircleAvatar(
               radius: 55.0,
-              backgroundImage: NetworkImage(DotEnv().env['backendImage_url'] + user.image),
+              backgroundImage: NetworkImage(DotEnv().env['backendImage_url'] + association.logo),
             ),
           ), //Icon(Icons.menu),
           title: Text(association.designation),
@@ -143,6 +148,65 @@ class SearchPage extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Text(' screenSearch ...'),
+    );
+  }
+}
+
+Widget _createDrawerItem(
+    {IconData icon, String text, GestureTapCallback onTap}) {
+  return ListTile(
+    title: Row(
+      children: <Widget>[
+        Icon(icon),
+        Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(text),
+        )
+      ],
+    ),
+    onTap: onTap,
+  );
+}
+
+class AppDrawer extends StatelessWidget {
+
+  Association association;
+
+  AppDrawer(Association asso)
+  {
+    association = asso;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+        child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          SizedBox(
+            height: 25,
+          ),
+          DrawerHeader(
+
+            decoration: BoxDecoration(
+              color:  HexColor.fromHex(association.color),
+                image: DecorationImage(image: NetworkImage(DotEnv().env['backendImage_url'] + association.logo))),
+          ),
+          ListTile(
+            title: Text('Déconnexion'),
+            trailing: Icon(Icons.logout),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                return new Authentication();
+              }));
+            },
+          ),
+        ]
+        )
+
     );
   }
 }
